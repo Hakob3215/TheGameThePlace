@@ -1,0 +1,62 @@
+THE GAME THE PLACE
+
+A replication of r/Place that allows for users to click a square and change its color every certain amount of seconds.
+
+===Main Features/Tasks===
+
+--Account System--
+(Users need to have an account)
+Have them sign in with a discord account? (Could be a cool thing to learn, actually, could use a Discord bot to notify users about their recharge being up) -- (OPTIONALLY) DISCORD FUNCTIONALITY
+
+--Color Grid System--
+Using React to render an [N x N] grid, (where N will be decided on later, ((need to add ability for changing/modifying grid as admin command)))
+
+--Admin Commands--
+If you log in with an admin account (which is set directly through either a database or something else IDK) you have greater features that normal users don't have access to. These include:
+    - No timer for adding colors
+    - Wiping the board (should require confirmation/multiple clicks)
+    - Modifying the board
+    - Timing out certain users / seeing how contributed 
+
+
+--Pixel Timeline--
+Implement tracking all changes to the board every second(?)
+
+--Whitelisting Users--
+Only THE GAME, or certain THE GAME users are allowed
+
+
+===Project Implementation/Technologies===
+
+--React--
+Implement the UI + Grid utilizing React for the frontend
+
+Esesntially, a pixel object will be defined, that has a color property, an rgb value property, a position (x,y coordinates)
+Optionally:
+    - Keep Track of last modifying user
+
+The, a grid row will be defined that holds an N amount of pixels
+The actual grid row object will consist of an N amount of grid rows
+
+The user will be able to select from a grid of (say 8 x 2 for now) colors, along with a color picker that takes up the size of ~[1.8 x 1.8] color squares
+
+
+
+
+--Express--
+Handle the server API requests for the backend
+
+When a user logs in
+    - Store their credentials (encrypt password) 
+    If discord:
+    - IDK (look this up later)
+    - Probably just storing the discord username and thats it?
+
+When a pixel is clicked
+    - Use the selected color, and change the pixel's rgb to said color
+    - Send a request to the server about said pixel's rgb+lastUser (Using the coordinates)
+    - Update the users' timer internally (to not allow for refreshes) [NOTE: this functionality MIGHT be able to be implemented with localBrowser Storage rather than a whole server, IDK]
+
+--MongoDB, or SQL--
+Decision for database will be made later
+Using Mongo is more familiar, but SQL is something I need to learn
