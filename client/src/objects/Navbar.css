@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffd700;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    align-self: flex-end;
+    list-style-type: none;
+    margin-bottom: 5px;
+    padding: 0;
+    text-align: right;
+    
+}
+
+.navbar h1 {
+    font-family: 'Poppins', sans-serif;
+    align-self: center;
+    margin: 0;
+}
+
+@keyframes rainbow {
+    0% {text-shadow: 0 0 7px red;}
+    14% {text-shadow: 0 0 7px orange;}
+    28% {text-shadow: 0 0 7px yellow;}
+    42% {text-shadow: 0 0 7px green;}
+    57% {text-shadow: 0 0 7px blue;}
+    71% {text-shadow: 0 0 7px indigo;}
+    85% {text-shadow: 0 0 7px violet;}
+    100% {text-shadow: 0 0 7px red;}
+}
+
+.navbar h1 a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar h1 a:hover {
+    animation: rainbow 1.5s linear infinite;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 35px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    position: relative;
+}
+
+.navbar ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: black;
+    bottom: -2px;
+    left: 50%;
+    transition: all 0.3s;
+    transform: translateX(-50%);
+}
+
+.navbar ul li a:hover::after {
+    width: 100%;
+}

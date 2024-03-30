@@ -29,6 +29,11 @@ Only THE GAME, or certain THE GAME users are allowed
 ===Project Implementation/Technologies===
 
 --React--
+
+FrontPage
+    - Sign up button
+    - Scroll down and a description of how the site works
+
 Implement the UI + Grid utilizing React for the frontend
 
 Esesntially, a pixel object will be defined, that has a color property, an rgb value property, a position (x,y coordinates)
