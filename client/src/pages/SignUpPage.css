@@ -49,3 +49,9 @@
 .submitButton:hover {
     background-color: #cc9900;
 }
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 0px;
+}
