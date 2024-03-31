@@ -4,6 +4,7 @@ import FrontPage from './pages/FrontPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import VerifyEmail from './pages/VerifyEmail';
+import Board from './pages/Board';
 import Navbar from './objects/Navbar';
 
 
@@ -15,6 +16,7 @@ const App = () => {
                 <Route path="/signin" element={<><Navbar/><SignInPage/></>} />
                 <Route path="/signup" element={<><Navbar/><SignUpPage/></>} />
                 <Route path="/verify-email" element={<><Navbar/><VerifyEmail/></>} />
+                <Route path="/board" element={<><Navbar/><Board /></>} />
             </Routes>
         </Router>
     );

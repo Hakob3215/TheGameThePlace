@@ -1,0 +1,120 @@
+import React from 'react';
+import { useState, useMemo } from 'react';
+import './Board.css';
+
+
+function Square({coords, color, onClick}){
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+        console.log(coords);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
+    return (
+        <button 
+            className='square' 
+            style={{backgroundColor: color, position: 'relative'}} 
+            onClick={onClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            {isHovered && (
+                <div style={{ 
+                    position: 'absolute',
+                    top: '-40px', 
+                    left: '-50px', 
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+                    padding: '5px'
+                }}>
+                    {coords}
+                </div>
+            )}
+        </button>
+    );
+}
+
+
+
+
+const Board = () => {
+    const BoardLength = 160;
+    const BoardHeight = 75;
+    const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('white')));
+    const [currentColor, setCurrentColor] = useState('white');
+
+    const handleSquareClick = (i,j) => {
+        let newColors = [...colors];
+        newColors[i][j] = currentColor;
+        setColors(newColors);
+    }
+    
+    const handleColorChange = (color) => {
+        setCurrentColor(color);
+    }
+    
+    const board = useMemo(() => {
+        let newBoard = [];
+        for (let i = 0; i < BoardHeight; i++) {
+            let row = [];
+            for (let j = 0; j < BoardLength; j++) {
+                row.push(<Square key={`${j},${i}`} coords={`${j},${i}`} color={colors[i][j]} onClick={(() => handleSquareClick(i,j))}/>);
+            }
+            newBoard.push(<div key={i} className='board-row'>{row}</div>)
+        }
+        return newBoard;
+    }, [colors,currentColor]);
+
+    return (
+        <>
+            {board}
+            <div className='color-selection'>
+            <div className='color-buttons'>
+                <div className='color-button-row'>
+                    <button className='color-button' onClick={() => handleColorChange('#6d001a')} style={{backgroundColor: '#6d001a'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#be0039')} style={{backgroundColor: '#be0039'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#ff4500')} style={{backgroundColor: '#ff4500'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#ffa800')} style={{backgroundColor: '#ffa800'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#ffd635')} style={{backgroundColor: '#ffd635'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#fff8b8')} style={{backgroundColor: '#fff8b8'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#00a368')} style={{backgroundColor: '#00a368'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#00cc78')} style={{backgroundColor: '#00cc78'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#7eed56')} style={{backgroundColor: '#7eed56'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#00756f')} style={{backgroundColor: '#00756f'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#009eaa')} style={{backgroundColor: '#009eaa'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#00ccc0')} style={{backgroundColor: '#00ccc0'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#2450a4')} style={{backgroundColor: '#2450a4'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#3690ea')} style={{backgroundColor: '#3690ea'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#51e9f4')} style={{backgroundColor: '#51e9f4'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#493ac1')} style={{backgroundColor: '#493ac1'}}></button>
+                </div>
+                <div className='color-button-row'>
+                    <button className='color-button' onClick={() => handleColorChange('#6a5cff')} style={{backgroundColor: '#6a5cff'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#94b3ff')} style={{backgroundColor: '#94b3ff'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#811e9f')} style={{backgroundColor: '#811e9f'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#b44ac0')} style={{backgroundColor: '#b44ac0'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#e4abff')} style={{backgroundColor: '#e4abff'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#de107f')} style={{backgroundColor: '#de107f'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#ff3881')} style={{backgroundColor: '#ff3881'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#ff99aa')} style={{backgroundColor: '#ff99aa'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#6d482f')} style={{backgroundColor: '#6d482f'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#9c6926')} style={{backgroundColor: '#9c6926'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#ffb470')} style={{backgroundColor: '#ffb470'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#000000')} style={{backgroundColor: '#000000'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#515252')} style={{backgroundColor: '#515252'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#898d90')} style={{backgroundColor: '#898d90'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#d4d7d9')} style={{backgroundColor: '#d4d7d9'}}></button>
+                    <button className='color-button' onClick={() => handleColorChange('#ffffff')} style={{backgroundColor: '#ffffff'}}></button>
+                </div>
+            </div>
+            <input type='color' className='color-picker' onChange={(event) => handleColorChange(event.target.value)}></input>
+            </div>
+        </>
+    );
+}
+
+export default Board;

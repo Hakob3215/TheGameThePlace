@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import './VerifyEmail.css';
 
@@ -7,6 +8,14 @@ const VerifyEmail = () => {
     const navigate = useNavigate();
 
 
+    useEffect(() => {
+        const unverifiedUser = JSON.parse(localStorage.getItem('unverifiedUser'));
+        console.log('unverified user:' + unverifiedUser);
+        if (!unverifiedUser) {
+            // if not, redirect to sign up page
+            navigate('/signup');
+        }
+    });
 
     function handleSubmit(e) {
         e.preventDefault();

@@ -88,8 +88,7 @@ const SignUpPage = () => {
 
     return (
         <>
-            <h1 className='signUpHeader'>Sign Up For an Account and to Gain Access to the Board</h1>
-            
+            <h1 className='signUpHeader'>Record/Remember Your Login Info (Username + Password)</h1>
             <form className='signUpForm' onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label><br/>
                 <input type="text" id="name" name="name" required/><br/>

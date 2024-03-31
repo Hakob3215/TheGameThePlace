@@ -141,6 +141,34 @@ app.post('/api/check-verification', (req, res) => {
     });
 });
   
+app.post('/api/signin', (req, res) => {
+    console.log('Sign In request received');
+    userModel.findOne({
+      username: req.body.username
+    }).then((user) => {
+      if(user) {
+        bcrypt.compare(req.body.password, user.password, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.sendStatus(500);
+          } else {
+            if (result) {
+              res.sendStatus(200);
+            } else {
+              res.sendStatus(201);
+            }
+          }
+        });
+      }
+      else {
+        res.sendStatus(201);
+      }
+    }
+    ).catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
