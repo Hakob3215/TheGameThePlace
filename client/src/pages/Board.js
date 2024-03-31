@@ -1,6 +1,10 @@
-import React from 'react';
-import { useState, useMemo } from 'react';
+import React, { useEffect } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import './Board.css';
+import io from 'socket.io-client';
+import ReactCountdownClock from 'react-countdown-clock';
+
+const socket = io.connect('http://localhost:5000');
 
 
 function Square({coords, color, onClick}){
@@ -8,7 +12,6 @@ function Square({coords, color, onClick}){
 
     const handleMouseEnter = () => {
         setIsHovered(true);
-        console.log(coords);
     };
 
     const handleMouseLeave = () => {
@@ -24,14 +27,27 @@ function Square({coords, color, onClick}){
             onMouseLeave={handleMouseLeave}
         >
             {isHovered && (
+                coords.j > 4 ?
                 <div style={{ 
                     position: 'absolute',
                     top: '-40px', 
                     left: '-50px', 
                     backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-                    padding: '5px'
+                    padding: '5px',
+                    zIndex: '1000',
                 }}>
-                    {coords}
+                    {`${coords.j+1}, ${coords.i+1}`}
+                </div>
+                :
+                <div style={{ 
+                    position: 'absolute',
+                    top: '-40px', 
+                    right: '-50px', 
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+                    padding: '5px',
+                    zIndex: '1000',
+                }}>
+                    {`${coords.j+1}, ${coords.i+1}`}
                 </div>
             )}
         </button>
@@ -47,32 +63,85 @@ const Board = () => {
     const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('white')));
     const [currentColor, setCurrentColor] = useState('white');
 
-    const handleSquareClick = (i,j) => {
+    const [isTimerRunning, setIsTimerRunning] = useState(false);
+    const waitTime = 5 * 60000;
+
+    useEffect(() => {
+        fetch('/api/get-grid').then((response) => 
+            response.json()).then((data) => {
+                setColors(data);
+            });
+        }, [setColors]);
+
+    useEffect(() => {
+        const endTime = localStorage.getItem('endTime');
+        if (endTime && Date.now() < endTime) {
+            setIsTimerRunning(true);
+        }
+    }, [setIsTimerRunning]);
+
+    socket.on('update-grid', (data) => {
+        // server sends a coordinate and color
+        let newColors = [...colors];
+        newColors[data.i][data.j] = data.color;
+        setColors(newColors);
+    });
+
+    const handleSquareClick = useCallback((i,j) => {
+
+        if(isTimerRunning){
+            return;
+        }
+        setIsTimerRunning(true);
+
+        localStorage.setItem('endTime', Date.now() + waitTime);
+
         let newColors = [...colors];
         newColors[i][j] = currentColor;
         setColors(newColors);
-    }
+        // send the updated grid to the server
+        fetch('/api/update-grid', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({i, j, color: currentColor})
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+
+    }, [colors,currentColor,isTimerRunning,waitTime]);
     
     const handleColorChange = (color) => {
         setCurrentColor(color);
     }
-    
     const board = useMemo(() => {
         let newBoard = [];
         for (let i = 0; i < BoardHeight; i++) {
             let row = [];
             for (let j = 0; j < BoardLength; j++) {
-                row.push(<Square key={`${j},${i}`} coords={`${j},${i}`} color={colors[i][j]} onClick={(() => handleSquareClick(i,j))}/>);
+                row.push(<Square key={`${j},${i}`} coords={{j,i}} color={colors[i][j]} onClick={(() => handleSquareClick(i,j))}/>);
             }
             newBoard.push(<div key={i} className='board-row'>{row}</div>)
         }
         return newBoard;
-    }, [colors,currentColor]);
+    }, [colors,handleSquareClick]);
 
     return (
         <>
+        <div className='board'>
             {board}
+        </div>
             <div className='color-selection'>
+            <div className='timer'>
+            { isTimerRunning &&<ReactCountdownClock seconds={(localStorage.getItem('endTime') - Date.now()) / 1000} weight={0} color="#000" alpha={.9}size={70} 
+            onComplete={() => {
+                setIsTimerRunning(false);
+                localStorage.removeItem('endTime');
+                }}/>}
+            </div>
             <div className='color-buttons'>
                 <div className='color-button-row'>
                     <button className='color-button' onClick={() => handleColorChange('#6d001a')} style={{backgroundColor: '#6d001a'}}></button>

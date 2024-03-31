@@ -11,6 +11,11 @@
 
 }
 
+.board {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #000;
+}
 .square:hover {
     border: 1px solid #000;
 }
@@ -65,6 +70,8 @@
     cursor: pointer;
 
     background-color: #888;
+}
 
-    
+.timer {
+    margin-top: 10px;
 }

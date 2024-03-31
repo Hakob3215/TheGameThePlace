@@ -47,4 +47,4 @@ const Grid = mongoose.model('Grid', gridSchema);
 const User = mongoose.model('User', userSchema);
 
 // export models for use in server.js
-module.exports = {User};
+module.exports = {User, Grid};

@@ -1,21 +1,42 @@
 const express = require('express');
+const cors = require('cors');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const http = require('http');
+const socketIo = require('socket.io');
 
 // import the database and email modules (mongoose and nodemailer)
 const db = require('./db');
 const emails = require('./emails');
+
+// create the server
+const app = express();
+app.use(cors());
+const port = 5000;
+
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
+});
+io.on('connection', (socket) => {
+  console.log('Client connected');
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
 
 // bcrypt salt rounds
 const saltRounds = 10;
 
 require('dotenv').config();
 
-
-const app = express();
-const port = 5000;
-
 userModel = db.User;
+gridModel = db.Grid;
 transporter = emails.transporter;
 
 app.use(express.json());
@@ -170,6 +191,34 @@ app.post('/api/signin', (req, res) => {
     });
 });
 
-app.listen(port, () => {
+app.post('/api/update-grid', (req, res) => {
+    console.log('Update Grid request received');
+    // update the grid
+    gridModel.findOneAndUpdate({}, {
+      $set: {
+        [`grid.${req.body.i}.${req.body.j}`]: req.body.color
+      }
+    }).then(() => {
+      res.sendStatus(200);
+      io.emit('update-grid', req.body);
+    }).catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+app.get('/api/get-grid', (req, res) => {
+    console.log('Get Grid request received');
+    gridModel.findOne().then((grid) => {
+      res.status(200).json(grid.grid);
+    }).catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+
+
+server.listen(port, () => {
     console.log(`Server running on port ${port}`)
 });
