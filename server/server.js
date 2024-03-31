@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
@@ -12,6 +13,7 @@ const emails = require('./emails');
 // create the server
 const app = express();
 app.use(cors());
+app.use(express.static(path.join(__dirname, '../client/build')));
 const port = 5000;
 
 const server = http.createServer(app);
@@ -217,6 +219,10 @@ app.get('/api/get-grid', (req, res) => {
     });
 });
 
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 
 server.listen(port, () => {
