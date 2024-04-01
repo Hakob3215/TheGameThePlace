@@ -4,7 +4,7 @@ import './Board.css';
 import io from 'socket.io-client';
 import ReactCountdownClock from 'react-countdown-clock';
 
-const socket = io.connect('http://localhost:5000');
+const socket = io.connect('https://thegametheplacetheserver.onrender.com/');
 
 
 function Square({coords, color, onClick}){

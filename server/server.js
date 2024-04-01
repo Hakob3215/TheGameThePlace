@@ -13,14 +13,14 @@ const emails = require('./emails');
 // create the server
 const app = express();
 app.use(cors());
-const port = 5000;
+const port = 10000;
 
 const server = http.createServer(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://thegametheplace.onrender.com/",
     methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
+    allowedHeaders: ["*"],
     credentials: true
   }
 });
