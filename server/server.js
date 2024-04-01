@@ -13,7 +13,6 @@ const emails = require('./emails');
 // create the server
 const app = express();
 app.use(cors());
-app.use(express.static(path.join(__dirname, '../client/build')));
 const port = 5000;
 
 const server = http.createServer(app);
@@ -217,11 +216,6 @@ app.get('/api/get-grid', (req, res) => {
       console.log(err);
       res.sendStatus(500);
     });
-});
-
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 
