@@ -18,7 +18,7 @@ const port = 10000;
 const server = http.createServer(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: "https://thegametheplace.onrender.com/",
+    origin: "https://thegametheplace.onrender.com",
     methods: ["GET", "POST"],
     allowedHeaders: ["*"],
     credentials: true
