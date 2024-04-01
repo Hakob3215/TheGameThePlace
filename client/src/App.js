@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import FrontPage from './pages/FrontPage';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
-import VerifyEmail from './pages/VerifyEmail';
-import Board from './pages/Board';
-import Navbar from './objects/Navbar';
+import FrontPage from './pages/FrontPage.js';
+import SignInPage from './pages/SignInPage.js';
+import SignUpPage from './pages/SignUpPage.js';
+import VerifyEmail from './pages/VerifyEmail.js';
+import Board from './pages/Board.js';
+import Navbar from './objects/Navbar.js';
 
 
 const App = () => {
