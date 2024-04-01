@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://thegametheplacetheserver.onrender.com',
+      target: 'https://thegametheplacetheserver.onrender.com/',
       changeOrigin: true,
     })
   );
