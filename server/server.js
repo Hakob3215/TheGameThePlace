@@ -42,7 +42,7 @@ transporter = emails.transporter;
 
 app.use(express.json());
 
-app.post('https://thegametheplace.onrender.com/api/signup', async (req, res) => {
+app.post('/api/signup', async (req, res) => {
     console.log('Sign Up request received');
     let usertaken = false;
     let emailtaken = false;
@@ -97,7 +97,7 @@ app.post('https://thegametheplace.onrender.com/api/signup', async (req, res) => 
   });
 
 
-app.post('https://thegametheplace.onrender.com/api/verification-email', (req, res) => {
+app.post('/api/verification-email', (req, res) => {
     console.log('Verification Email request received');
     // send verification code to email
     const verificationCode = Math.floor(100000 + Math.random() * 900000);
@@ -132,7 +132,7 @@ app.post('https://thegametheplace.onrender.com/api/verification-email', (req, re
     });
 });
 
-app.post('https://thegametheplace.onrender.com/api/check-verification', (req, res) => {
+app.post('/api/check-verification', (req, res) => {
     console.log('Check Verification request received:' + req.body.verificationCode + ' ' + req.body.storedCode);
     // compare the verification code with the stored code
     bcrypt.compare(req.body.verificationCode, req.body.storedCode, (err, result) => {
@@ -163,7 +163,7 @@ app.post('https://thegametheplace.onrender.com/api/check-verification', (req, re
     });
 });
   
-app.post('https://thegametheplace.onrender.com/api/signin', (req, res) => {
+app.post('/api/signin', (req, res) => {
     console.log('Sign In request received');
     userModel.findOne({
       username: req.body.username
@@ -192,7 +192,7 @@ app.post('https://thegametheplace.onrender.com/api/signin', (req, res) => {
     });
 });
 
-app.post('https://thegametheplace.onrender.com/api/update-grid', (req, res) => {
+app.post('/api/update-grid', (req, res) => {
     console.log('Update Grid request received');
     // update the grid
     gridModel.findOneAndUpdate({}, {
@@ -208,7 +208,7 @@ app.post('https://thegametheplace.onrender.com/api/update-grid', (req, res) => {
     });
 });
 
-app.get('https://thegametheplace.onrender.com/api/get-grid', (req, res) => {
+app.get('/api/get-grid', (req, res) => {
     console.log('Get Grid request received');
     gridModel.findOne().then((grid) => {
       res.status(200).json(grid.grid);

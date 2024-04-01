@@ -12,7 +12,7 @@ const SignInPage = () => {
         const password = e.target['password'].value;
 
         // send the username and password to the server to verify
-        fetch('/api/signin', {
+        fetch('https://thegametheplacetheserver.onrender.com/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

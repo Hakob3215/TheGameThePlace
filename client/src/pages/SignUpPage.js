@@ -15,7 +15,7 @@ const SignUpPage = () => {
         const username = e.target.username.value;
         const password = e.target.password.value;
     
-        fetch('/api/signup', {
+        fetch('https://thegametheplacetheserver.onrender.com/api/signup', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const SignUpPage = () => {
                       console.log(unverifiedUser.username + ' ' + unverifiedUser.password);
                       
                       // send verification code to email
-                      fetch('/api/verification-email', {
+                      fetch('https://thegametheplacetheserver.onrender.com/api/verification-email', {
                           method: 'POST',
                           headers: {
                               'Content-Type': 'application/json',

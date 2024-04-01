@@ -29,7 +29,7 @@ const VerifyEmail = () => {
         const name = unverifiedUser.name;
 
         // send both codes to the server to verify with bcrypt
-        fetch('/api/check-verification', {
+        fetch('https://thegametheplacetheserver.onrender.com/api/check-verification', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

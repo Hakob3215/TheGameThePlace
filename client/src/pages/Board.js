@@ -67,7 +67,7 @@ const Board = () => {
     const waitTime = 5 * 60000;
 
     useEffect(() => {
-        fetch('/api/get-grid').then((response) => 
+        fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
             response.json()).then((data) => {
                 setColors(data);
             });
@@ -100,7 +100,7 @@ const Board = () => {
         newColors[i][j] = currentColor;
         setColors(newColors);
         // send the updated grid to the server
-        fetch('/api/update-grid', {
+        fetch('https://thegametheplacetheserver.onrender.com/api/update-grid', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
