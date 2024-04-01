@@ -13,7 +13,7 @@ const emails = require('./emails');
 // create the server
 const app = express();
 app.use(cors());
-const port = 10000;
+const port = process.env.PORT || 10000;
 
 const server = http.createServer(app);
 const io = require('socket.io')(server, {
@@ -216,6 +216,10 @@ app.get('/api/get-grid', (req, res) => {
       console.log(err);
       res.sendStatus(500);
     });
+});
+
+app.get('/', (req, res) => {
+  res.send('Server is running');
 });
 
 
