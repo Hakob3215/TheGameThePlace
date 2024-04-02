@@ -12,19 +12,25 @@
 }
 
 .board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin: 0;
     padding: 0;
     border: 1px solid #000;
+    background-color: lightgray;
 }
+
 .square:hover {
     border: 1px solid #000;
 }
 
 
-.board-row{
-    margin: 0;
-    padding: 0;
+.board-row {
     display: flex;
+    justify-content: start;
+    align-items: start;
+    flex: 0 0 auto;
 }
 
 .color-selection {

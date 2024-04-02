@@ -131,9 +131,9 @@ const Board = () => {
 
     return (
         <>
-        <div className='board'>
-            {board}
-        </div>
+            <div className='board'>
+                {board}
+            </div>
             <div className='color-selection'>
             <div className='timer'>
             { isTimerRunning &&<ReactCountdownClock seconds={(localStorage.getItem('endTime') - Date.now()) / 1000} weight={0} color="#000" alpha={.9}size={70} 
