@@ -24,7 +24,10 @@ const Navbar = () => {
             </>
                 )
                 :
+            <>
+                <li><Link to='/board'>Board</Link></li>
                 <li><a href='/' onClick={handleSignOut}>Sign Out</a></li>
+            </>
                 }
             </ul>
         </nav>
