@@ -5,6 +5,7 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 const http = require('http');
 const socketIo = require('socket.io');
+const cron = require('node-cron');
 
 // import the database and email modules (mongoose and nodemailer)
 const db = require('./db');
@@ -38,9 +39,27 @@ require('dotenv').config();
 
 userModel = db.User;
 gridModel = db.Grid;
+gridHistoryModel = db.GridHistory;
 transporter = emails.transporter;
 
 app.use(express.json());
+
+// create a cron job to store the grid every day
+cron.schedule('0 0 * * *', () => {
+  console.log('Storing grid history');
+  gridModel.findOne().then((grid) => {
+    const newGrid = new gridHistoryModel({
+      grid: grid.grid
+    });
+    newGrid.save().then(() => {
+      console.log('Grid history stored');
+    }).catch((err) => {
+      console.log(err);
+    });
+  }).catch((err) => {
+    console.log(err);
+  });
+});
 
 app.post('/api/signup', async (req, res) => {
     console.log('Sign Up request received');

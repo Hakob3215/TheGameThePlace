@@ -40,11 +40,26 @@ const gridSchema = new mongoose.Schema({
     }
 })
 
+// Create a schema for the grid history, a 2D array of color strings + timestamp
+const gridHistorySchema = new mongoose.Schema({
+    grid: {
+        type: [[String]],
+        default: Array(75).fill().map(() => Array(160).fill('white'))
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
+})
+
 // create a model for the grid
 const Grid = mongoose.model('Grid', gridSchema);
 
 // create a model for users
 const User = mongoose.model('User', userSchema);
 
+// create a model for grid history
+const GridHistory = mongoose.model('GridHistory', gridHistorySchema);
+
 // export models for use in server.js
-module.exports = {User, Grid};
+module.exports = {User, Grid, GridHistory};
