@@ -64,7 +64,7 @@ const Board = () => {
     const [currentColor, setCurrentColor] = useState('white');
 
     const [isTimerRunning, setIsTimerRunning] = useState(false);
-    const waitTime = 5 * 60000;
+    const waitTime = 3 * 60000;
 
     useEffect(() => {
         fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
@@ -180,7 +180,7 @@ const Board = () => {
                     <button className='color-button' onClick={() => handleColorChange('#ffffff')} style={{backgroundColor: '#ffffff'}}></button>
                 </div>
             </div>
-            <input type='color' className='color-picker' onChange={(event) => handleColorChange(event.target.value)}></input>
+            <input type='color' className='color-picker' value={currentColor} onChange={(event) => handleColorChange(event.target.value)}></input>
             </div>
         </>
     );
