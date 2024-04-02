@@ -45,7 +45,7 @@ transporter = emails.transporter;
 app.use(express.json());
 
 // create a cron job to store the grid every day
-cron.schedule('0 0 * * *', () => {
+cron.schedule('55 0 * * *', () => {
   console.log('Storing grid history');
   gridModel.findOne().then((grid) => {
     const newGrid = new gridHistoryModel({
