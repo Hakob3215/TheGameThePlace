@@ -60,8 +60,8 @@ function Square({coords, color, onClick}){
 const Board = () => {
     const BoardLength = 160;
     const BoardHeight = 75;
-    const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('black')));
-    const [currentColor, setCurrentColor] = useState('white');
+    const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('white')));
+    const [currentColor, setCurrentColor] = useState('#000000');
 
     const [isTimerRunning, setIsTimerRunning] = useState(false);
     const waitTime = 3 * 60000;
