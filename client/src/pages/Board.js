@@ -69,7 +69,7 @@ const Board = () => {
     const waitTime = 3 * 60000;
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = localStorage.getItem('user');
         if (!user) {
             // if not signed in, redirect to sign in page
             navigate('/signin');
