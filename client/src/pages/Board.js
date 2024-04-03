@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Board.css';
 import io from 'socket.io-client';
 import ReactCountdownClock from 'react-countdown-clock';
@@ -58,6 +59,7 @@ function Square({coords, color, onClick}){
 
 
 const Board = () => {
+    const navigate = useNavigate();
     const BoardLength = 160;
     const BoardHeight = 75;
     const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('white')));
@@ -65,6 +67,14 @@ const Board = () => {
 
     const [isTimerRunning, setIsTimerRunning] = useState(false);
     const waitTime = 3 * 60000;
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            // if not signed in, redirect to sign in page
+            navigate('/signin');
+        }
+    });
 
     useEffect(() => {
         fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
