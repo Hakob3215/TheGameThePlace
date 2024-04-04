@@ -123,10 +123,9 @@ const Board = () => {
                     // IF the timer is not running, set the timer
                     // get the end time from the server
                     const endTime = response.json(); 
-                    if (!isTimerRunning) {
-                        setIsTimerRunning(true);
-                        localStorage.setItem('endTime', endTime);
-                    }
+                    setIsTimerRunning(true);
+                    localStorage.setItem('endTime', endTime);
+
                     // else, nothing should happen
                     return;
                 case 500:

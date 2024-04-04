@@ -231,12 +231,12 @@ app.post('/api/check-timer', (req, res) => {
     console.log('Check Timer request received');
     // check the time left for the user
     userModel.findOne({
-      username: req.body.username
+      username: req.body.currentUser
     }).then((user) => {
       // if end time is not set, or end time is passed, all good, just update the end time
       if(!user.endTime || user.endTime < Date.now()) {
         userModel.findOneAndUpdate({
-          username: req.body.username
+          username: req.body.currentUser
         }, {
           endTime: Date.now() + 3 * 60000
         })
