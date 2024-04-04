@@ -234,7 +234,7 @@ app.post('/api/check-timer', (req, res) => {
       username: req.body.currentUser
     }).then((user) => {
       // if end time is not set, or end time is passed, all good, just update the end time
-      if(!user.endTime || user.endTime < Date.now()) {
+      if(user.endTime === undefined || user.endTime < Date.now()) {
         userModel.findOneAndUpdate({
           username: req.body.currentUser
         }, {
@@ -248,7 +248,7 @@ app.post('/api/check-timer', (req, res) => {
         });
       } else {
         // the time has not passed, meaning the user has to wait, and the client's end time should be updated
-        res.sendStatus(201).json(user.endTime);
+        res.status(201).json(user.endTime);
       }
     }).catch((err) => {
       console.log(err);
