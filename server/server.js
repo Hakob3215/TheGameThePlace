@@ -248,7 +248,7 @@ app.post('/api/check-timer', (req, res) => {
         });
       } else {
         // the time has not passed, meaning the user has to wait, and the client's end time should be updated
-        res.status(201).json(user.endTime);
+        res.status(201).json({endTime: user.endTime});
       }
     }).catch((err) => {
       console.log(err);

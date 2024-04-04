@@ -124,6 +124,7 @@ const Board = () => {
                     // get the end time from the server
                     const data = response.json().then((data) => {
                         setIsTimerRunning(true);
+                        console.log(data.endTime);
                         localStorage.setItem('endTime', data.endTime);
                     });
                     // else, nothing should happen
