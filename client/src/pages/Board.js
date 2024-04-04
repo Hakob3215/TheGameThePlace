@@ -122,9 +122,9 @@ const Board = () => {
                     // according to the db, the user has to wait
                     // IF the timer is not running, set the timer
                     // get the end time from the server
-                    const endTime = response.json(); 
+                    const data = response.json(); 
                     setIsTimerRunning(true);
-                    localStorage.setItem('endTime', endTime);
+                    localStorage.setItem('endTime', data.endTime);
 
                     // else, nothing should happen
                     return;
