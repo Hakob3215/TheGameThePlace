@@ -99,9 +99,47 @@ const Board = () => {
 
     const handleSquareClick = useCallback((i,j) => {
 
+        const user = localStorage.getItem('user');
         if(isTimerRunning){
             return;
         }
+        fetch('https://thegametheplacetheserver.onrender.com/api/check-timer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({currentUser: user})
+        }).then( (response) => {
+            // response is a sstatus code
+            // 200 - all good (no wait time)
+            // 201 - wait time is there
+            // 500 - server error
+            switch (response.status) {
+                case 200:
+                    // nothing to do, just proceed
+                    break;
+                case 201:
+                    // according to the db, the user has to wait
+                    // IF the timer is not running, set the timer
+                    // get the end time from the server
+                    const endTime = response.json(); 
+                    if (!isTimerRunning) {
+                        setIsTimerRunning(true);
+                        localStorage.setItem('endTime', endTime);
+                    }
+                    // else, nothing should happen
+                    return;
+                case 500:
+                    // server error
+                    console.log('Server error');
+                    return;
+                default:
+                    // somehow, weird status code
+                    console.log('Non 200/201/500 status code');
+                    return;
+            }
+        })
+
         setIsTimerRunning(true);
 
         localStorage.setItem('endTime', Date.now() + waitTime);

@@ -21,7 +21,15 @@ const userSchema = new mongoose.Schema({
     username: String,
     password: String,
     // number of pixels placed by user
-    // pixelCount: Number
+    pixelCount: {
+        type: Number,
+        default: 0
+    },
+
+    endTime: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 // handle password hashing

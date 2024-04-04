@@ -227,6 +227,35 @@ app.post('/api/update-grid', (req, res) => {
     });
 });
 
+app.post('/api/check-timer', (req, res) => {
+    console.log('Check Timer request received');
+    // check the time left for the user
+    userModel.findOne({
+      username: req.body.username
+    }).then((user) => {
+      // if end time is not set, or end time is passed, all good, just update the end time
+      if(!user.endTime || user.endTime < Date.now()) {
+        userModel.findOneAndUpdate({
+          username: req.body.username
+        }, {
+          endTime: Date.now() + 3 * 60000
+        })
+        .then(() => {
+          res.sendStatus(200);
+        }
+        ).catch((err) => {
+          console.log(err);
+        });
+      } else {
+        // the time has not passed, meaning the user has to wait, and the client's end time should be updated
+        res.sendStatus(201).json(user.endTime);
+      }
+    }).catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 app.get('/api/get-grid', (req, res) => {
     console.log('Get Grid request received');
     gridModel.findOne().then((grid) => {
@@ -240,6 +269,8 @@ app.get('/api/get-grid', (req, res) => {
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
+
+
 
 
 server.listen(port, () => {
