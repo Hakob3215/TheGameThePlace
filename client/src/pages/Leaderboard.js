@@ -27,7 +27,7 @@ const Leaderboard = () => {
                 {leaderboard.map((user, index) => {
                     return (
                         <li key={index} className='leaderboardItem'>
-                            {user.username} - {user.pixels}
+                            <strong>{user.username}</strong> {user.pixelCount}
                         </li>
                     )
                 })}

@@ -5,3 +5,23 @@
     justify-content: center;
     margin-top: 50px;
 }
+
+.leaderboardList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin-top: 20px;
+}
+
+.leaderboardItem {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #ffec80;
+}
