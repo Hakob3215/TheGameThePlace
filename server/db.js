@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     },
 
     endTime: {
-        type: Date,
+        type: Number,
         default: Date.now
     }
 });
