@@ -267,12 +267,22 @@ app.get('/api/get-grid', (req, res) => {
     });
 });
 
+app.get('/api/leaderboard', (req, res) => {
+  // get all users that have a pixel count that exists
+  userModel.find({
+    pixelCount: { $exists: true }
+  }).sort({ pixelCount: -1, endTime: -1 }).then((users) => {
+    res.status(200).json(users);
+  }).catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  });
+
+});
+
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
-
-
-
 
 server.listen(port, () => {
     console.log(`Server running on port ${port}`)
