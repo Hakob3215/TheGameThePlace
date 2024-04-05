@@ -179,9 +179,6 @@ const Board = () => {
             <div className='timer'>
             { isTimerRunning &&<ReactCountdownClock seconds={(localStorage.getItem('endTime') - Date.now()) / 1000} weight={0} color="#000" alpha={.9}size={70} 
             onComplete={() => {
-                if (Date.now() < localStorage.getItem('endTime')) {
-                    return;
-                }
                 setIsTimerRunning(false);
                 localStorage.removeItem('endTime');
                 }}/>}

@@ -233,12 +233,13 @@ app.post('/api/check-timer', (req, res) => {
     userModel.findOne({
       username: req.body.currentUser
     }).then((user) => {
-      // if end time is not set, or end time is passed, all good, just update the end time
+      // if end time is not set, or end time is passed, all good, just update the end time, a pixel has been placed
       if(user.endTime === undefined || user.endTime < Date.now()) {
         userModel.findOneAndUpdate({
           username: req.body.currentUser
         }, {
-          endTime: Date.now() + 3 * 60000
+          endTime: Date.now() + 3 * 60000,
+          $inc: { pixelCount: 1 }
         })
         .then(() => {
           res.sendStatus(200);
