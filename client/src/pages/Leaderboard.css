@@ -17,11 +17,33 @@
 
 .leaderboardItem {
     display: flex;
+    position: relative;
+    align-items: center;
     justify-content: space-between;
     width: 60%;
     margin: 10px;
     padding: 10px;
-    border: 1px solid #000;
+    border: 2px solid #000;
     border-radius: 10px;
-    background-color: #ffec80;
+    background-color: #add8e6;
+}
+
+.topLeaderboardItem {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ffffff80, #ffffff19);
+    background-size: 200% 200%;
+    animation: glimmer 4s linear infinite;}
+
+@keyframes glimmer {
+    0% {background-position: 100% 50%;}
+    50% {background-position: 0% 50%;}
+    100% {background-position: 100% 50%;}
 }
