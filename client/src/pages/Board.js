@@ -98,7 +98,7 @@ const Board = () => {
     });
 
     const handleSquareClick = useCallback( async (i,j) => {
-        if (i === 20 && j === 20) {
+        if (i === 20 || j === 20) {
             // if the user clicks on the 21 square, its time for funnies
             const audioFunny = new Audio("/funny.mp3");
             audioFunny.play();
