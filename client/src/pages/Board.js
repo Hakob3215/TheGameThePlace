@@ -94,10 +94,15 @@ const Board = () => {
         // server sends a coordinate and color
         let newColors = [...colors];
         newColors[data.i][data.j] = data.color;
-        setColors(newColors);
+        setColors(newColors);git
     });
 
     const handleSquareClick = useCallback( async (i,j) => {
+        if (i === 21 && j === 21) {
+            // if the user clicks on the 21 square, its time for funnies
+            const audioFunny = new Audio("../funny.mp3");
+            audioFunny.play();
+        }
         const user = localStorage.getItem('user');
         if(isTimerRunning){
             return;
