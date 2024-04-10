@@ -19,6 +19,13 @@
     padding: 0;
     border: 1px solid #000;
     background-color: lightgray;
+    overflow: auto;
+}
+
+@media screen and (max-width: 1550px) {
+    .board {
+        justify-content: flex-start;
+    }
 }
 
 .square:hover {
@@ -28,7 +35,7 @@
 
 .board-row {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: start;
     flex: 0 0 auto;
     border-left: 1px solid #000;
@@ -37,18 +44,21 @@
 
 .color-selection {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     margin: 0;
-    padding: 0;
+    padding: 0 50px;
     border: 0;
     margin-top: -5px;
+    position: relative;
+    flex-direction: row;
+    overflow: auto;
 }
 
 .color-buttons {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 60%;
+    width: 1200px;
     margin-top: 10px;
 }
 
@@ -71,7 +81,7 @@
     z-index: 1;
     margin-top: 16px;
     height: 80px;
-    width: 80px;
+    min-width: 80px;
 
     border: 0px solid #888;
     border-radius: 10px;
