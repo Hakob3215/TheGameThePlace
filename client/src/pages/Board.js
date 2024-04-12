@@ -64,6 +64,7 @@ const Board = () => {
     const BoardHeight = 75;
     const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('white')));
     const [currentColor, setCurrentColor] = useState('#000000');
+    const [boardLoaded, setBoardLoaded] = useState(false);
 
     const [isTimerRunning, setIsTimerRunning] = useState(false);
     const waitTime = 3 * 60000;
@@ -80,6 +81,7 @@ const Board = () => {
         fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
             response.json()).then((data) => {
                 setColors(data);
+                setBoardLoaded(true);
             });
         }, [setColors]);
 
@@ -176,6 +178,7 @@ const Board = () => {
     }, [colors,handleSquareClick]);
 
     return (
+        boardLoaded ?
         <>
             <div className='board'>
                 {board}
@@ -229,6 +232,8 @@ const Board = () => {
             <input type='color' className='color-picker' value={currentColor} onChange={(event) => handleColorChange(event.target.value)}></input>
             </div>
         </>
+        :
+        <div className='loading'> <h1>Loading...</h1></div>
     );
 }
 
