@@ -89,6 +89,11 @@ const Board = () => {
                 });
             }
         }
+        fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
+        response.json()).then((data) => {
+            setColors(data);
+            setBoardLoaded(true);
+        });
         document.addEventListener('visibilitychange', handleVisibilityChange);
         return () => {
             // handle cleanup
