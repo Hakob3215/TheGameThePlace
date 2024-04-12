@@ -78,11 +78,22 @@ const Board = () => {
     });
 
     useEffect(() => {
-        fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
-            response.json()).then((data) => {
-                setColors(data);
-                setBoardLoaded(true);
-            });
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                setBoardLoaded(false);
+            } else {
+                fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
+                response.json()).then((data) => {
+                    setColors(data);
+                    setBoardLoaded(true);
+                });
+            }
+        }
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => {
+            // handle cleanup
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
         }, [setColors]);
 
     useEffect(() => {
