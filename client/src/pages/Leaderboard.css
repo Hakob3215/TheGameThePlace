@@ -26,6 +26,7 @@
     border: 2px solid #000;
     border-radius: 10px;
     background-color: #add8e6;
+    overflow: auto;
 }
 
 .topLeaderboardItem {
@@ -40,7 +41,9 @@
     border-radius: 10px;
     background: linear-gradient(90deg, #ffffff80, #ffffff19);
     background-size: 200% 200%;
-    animation: glimmer 4s linear infinite;}
+    animation: glimmer 4s linear infinite;
+    overflow: auto;
+}
 
 @keyframes glimmer {
     0% {background-position: 100% 50%;}
