@@ -8,7 +8,7 @@ import ReactCountdownClock from 'react-countdown-clock';
 const socket = io.connect('https://thegametheplacetheserver.onrender.com');
 
 
-function Square({coords, color, onClick}){
+function Square({coords, color, onClick, onRightClick}){
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -24,6 +24,7 @@ function Square({coords, color, onClick}){
             className='square' 
             style={{backgroundColor: color, position: 'relative'}} 
             onClick={onClick}
+            onContextMenu={onRightClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -62,7 +63,7 @@ const Board = () => {
     const navigate = useNavigate();
     const BoardLength = 160;
     const BoardHeight = 75;
-    const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('white')));
+    const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('#ffffff')));
     const [currentColor, setCurrentColor] = useState('#000000');
     const [boardLoaded, setBoardLoaded] = useState(false);
 
@@ -181,17 +182,21 @@ const Board = () => {
     const handleColorChange = (color) => {
         setCurrentColor(color);
     }
+    const handleRightClick = useCallback((event,i,j) => {
+        event.preventDefault();
+        setCurrentColor(colors[i][j]);
+    }, [colors]);
     const board = useMemo(() => {
         let newBoard = [];
         for (let i = 0; i < BoardHeight; i++) {
             let row = [];
             for (let j = 0; j < BoardLength; j++) {
-                row.push(<Square key={`${j},${i}`} coords={{j,i}} color={colors[i][j]} onClick={(() => handleSquareClick(i,j))}/>);
+                row.push(<Square key={`${j},${i}`} coords={{j,i}} color={colors[i][j]} onClick={(() => handleSquareClick(i,j))} onRightClick={(e) => handleRightClick(e,i,j)}/>);
             }
             newBoard.push(<div key={i} className='board-row'>{row}</div>)
         }
         return newBoard;
-    }, [colors,handleSquareClick]);
+    }, [colors,handleSquareClick, handleRightClick]);
 
     return (
         boardLoaded ?
