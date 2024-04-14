@@ -123,7 +123,8 @@ const Board = () => {
             audioFunny.play();
         }
         const user = localStorage.getItem('user');
-        if(isTimerRunning){
+        // if the timer is running, or the color is the same (ie; nothing would happen), do nothing
+        if(isTimerRunning || currentColor === colors[i][j]){
             return;
         }
         const response = await fetch('https://thegametheplacetheserver.onrender.com/api/check-timer', {
