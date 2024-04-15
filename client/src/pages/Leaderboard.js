@@ -1,10 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import './Leaderboard.css';
+import LoadingMessage from '../objects/LoadingMessage';
 
 const Leaderboard = () => {
 
     const [leaderboard, setLeaderboard] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch('https://thegametheplacetheserver.onrender.com/api/leaderboard', {
@@ -16,11 +18,13 @@ const Leaderboard = () => {
         .then(response => response.json())
         .then(data => {
             setLeaderboard(data);
+            setLoading(false);
         });
     }, []);
 
     return (
-        <>
+        
+        loading ? <LoadingMessage time={500} /> :
         <div className='leaderboard'>
             <h1 className='leaderboardTitle'>Pixels Placed</h1>
             <ol className='leaderboardList'>
@@ -53,7 +57,7 @@ const Leaderboard = () => {
                 })}
             </ol>
         </div>
-        </>
+        
     )
 };
 

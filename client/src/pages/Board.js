@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './Board.css';
 import io from 'socket.io-client';
 import ReactCountdownClock from 'react-countdown-clock';
+import LoadingMessage from '../objects/LoadingMessage';
 
 const socket = io.connect('https://thegametheplacetheserver.onrender.com');
 
@@ -55,31 +56,6 @@ function Square({coords, color, onClick, onRightClick}){
         </button>
     );
 }
-
-function LoadingMessage({time}) {
-    const [loadText, setLoadText] = useState('Loading...');
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setLoadText((prevLoadingText) => {
-                switch (prevLoadingText) {
-                    case 'Loading.':
-                        return 'Loading..';
-                    case 'Loading..':
-                        return 'Loading...';
-                    case 'Loading...':
-                        return 'Loading.';
-                    default:
-                        return 'Loading...';
-                }
-            });
-        }, time);
-        return () => clearInterval(interval);
-    }, [time]);
-    return <h1 className='loading'>{loadText}</h1>;
-}
-
-
-
 
 const Board = () => {
     const navigate = useNavigate();
