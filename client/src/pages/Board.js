@@ -57,7 +57,7 @@ function Square({coords, color, onClick, onRightClick}){
 }
 
 function LoadingMessage({time}) {
-    const [loadText, setLoadText] = useState('Loading.');
+    const [loadText, setLoadText] = useState('Loading...');
     useEffect(() => {
         const interval = setInterval(() => {
             setLoadText((prevLoadingText) => {
