@@ -70,13 +70,15 @@ const Board = () => {
 
     useEffect(() => {
         const user = localStorage.getItem('user');
+        setCurrentColor(localStorage.getItem('color') || '#000000');
         if (!user) {
             // if not signed in, redirect to sign in page
             navigate('/signin');
         }
-    });
+    }, [setCurrentColor,navigate]);
 
     useEffect(() => {
+    // handle tab switching/application switching
         const handleVisibilityChange = () => {
             if (document.hidden) {
                 setBoardLoaded(false);
@@ -88,6 +90,7 @@ const Board = () => {
                 });
             }
         }
+        // load the board on initial render
         fetch('https://thegametheplacetheserver.onrender.com/api/get-grid').then((response) => 
         response.json()).then((data) => {
             setColors(data);
@@ -101,12 +104,15 @@ const Board = () => {
         }, [setColors]);
 
     useEffect(() => {
+        // check if the timer is currently running
         const endTime = localStorage.getItem('endTime');
         if (endTime && Date.now() < endTime) {
             setIsTimerRunning(true);
         }
     }, [setIsTimerRunning]);
 
+    // websocket event listener for real-time updates
+    // utilizes just the coordinates and color for efficiency
     socket.on('update-grid', (data) => {
         // server sends a coordinate and color
         let newColors = [...colors];
@@ -115,6 +121,7 @@ const Board = () => {
     });
 
     const handleSquareClick = useCallback( async (i,j) => {
+
         if (i === 20 || j === 20) {
             // if the user clicks on the 21 square, its time for funnies
             const audioFunny = new Audio("/funny.mp3");
@@ -179,6 +186,7 @@ const Board = () => {
     }, [colors,currentColor,isTimerRunning,waitTime]);
     
     const handleColorChange = (color) => {
+        localStorage.setItem('color', color);
         setCurrentColor(color);
     }
     const handleRightClick = useCallback((event,i,j) => {
