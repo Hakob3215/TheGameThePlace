@@ -192,6 +192,7 @@ const Board = () => {
     const handleRightClick = useCallback((event,i,j) => {
         event.preventDefault();
         setCurrentColor(colors[i][j]);
+        localStorage.setItem('color', colors[i][j]);
     }, [colors]);
     const board = useMemo(() => {
         let newBoard = [];
