@@ -62,7 +62,7 @@ const Board = () => {
     const BoardLength = 160;
     const BoardHeight = 75;
     const [colors, setColors] = useState(Array(BoardHeight).fill().map(() => Array(BoardLength).fill('#ffffff')));
-    const [currentColor, setCurrentColor] = useState('#000000');
+    const [currentColor, setCurrentColor] = useState(localStorage.getItem('color') || '#000000');
     const [boardLoaded, setBoardLoaded] = useState(false);
 
     const [isTimerRunning, setIsTimerRunning] = useState(false);
